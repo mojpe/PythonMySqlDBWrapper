@@ -1,2 +1,2 @@
-# PythonMySQLWrapper
-Python MySQL Wrapper
+# PythonMySqlDBWrapper
+Python MySQL DB Wrapper
