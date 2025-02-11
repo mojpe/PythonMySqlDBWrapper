@@ -53,7 +53,28 @@ db = Database(config)
 #### Selecting Data
 ```python
 # Fetch all records from a table
-result = db.select("users", columns=["id", "username"], limit=5)
+result = db.select("users", columns=["id", "username"], limit=None)
+print(result)
+```
+
+### Selecting Data with WHERE Condition
+```python
+# Select specific rows based on conditions
+where_conditions = {'id': 682}
+result = db.select('pauth_grouppermission', where=where_conditions, columns=['id', 'key'])
+print(result)
+```
+
+### Performing a JOIN Query
+```python
+# Join two tables and retrieve specific columns
+db.cursor.execute('''
+    SELECT p.id, p.key, g.name
+    FROM pauth_grouppermission p
+    JOIN auth_group g ON p.group_id = g.id
+    WHERE g.name = %s
+''', ('Admin',))
+result = db.cursor.fetchall()
 print(result)
 ```
 
@@ -112,4 +133,3 @@ print("Exported to settings_export.csv ✅")
 
 ## License
 This project is open-source and free to use under the MIT License.
-
