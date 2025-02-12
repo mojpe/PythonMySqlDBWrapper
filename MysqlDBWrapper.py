@@ -2,27 +2,35 @@ import mysql.connector
 from mysql.connector import Error
 
 class MySQLDB:
-    def __init__(self, host, user, password, database, prefix=''):
-        self.host = host
-        self.user = user
-        self.password = password
-        self.database = database
+    def __init__(self, config, prefix=""):
+        """Initialize database connection using a configuration dictionary."""
+        self.config = config
         self.prefix = prefix
         self.connection = None
         self.cursor = None
         self.connect()
 
     def connect(self):
+        """Establish the database connection."""
         try:
             self.connection = mysql.connector.connect(
-                host=self.host,
-                user=self.user,
-                password=self.password,
-                database=self.database
+                host=self.config["host"],
+                user=self.config["user"],
+                password=self.config["password"],
+                database=self.config["database"]
             )
             self.cursor = self.connection.cursor(dictionary=True)
+            print("✅ Database connection established successfully.")
         except Error as e:
-            print(f"Error connecting to MySQL: {e}")
+            print(f"❌ Connection failed: {e}")
+
+    def close(self):
+        """Close the database connection."""
+        if self.cursor:
+            self.cursor.close()
+        if self.connection:
+            self.connection.close()
+            print("🔌 Database connection closed.")
 
     def insert(self, table, data):
         table = self.prefix + table

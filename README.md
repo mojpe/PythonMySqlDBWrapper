@@ -36,7 +36,7 @@ deactivate
 
 ### 1. Initialize the Database Connection
 ```python
-from db_wrapper import Database
+from MysqlDBWrapper import MySQLDB
 
 # Create a database instance
 config = {
@@ -45,7 +45,7 @@ config = {
     "password": "yourpassword",
     "database": "yourdatabase"
 }
-db = Database(config)
+db = MySQLDB(config)
 ```
 
 ### 2. Performing Queries
