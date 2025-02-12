@@ -61,7 +61,7 @@ print(result)
 ```python
 # Select specific rows based on conditions
 where_conditions = {'id': 682}
-result = db.select('pauth_grouppermission', where=where_conditions, columns=['id', 'key'])
+result = db.select('users', where=where_conditions, columns=['id', 'name'])
 print(result)
 ```
 
@@ -69,10 +69,10 @@ print(result)
 ```python
 # Join two tables and retrieve specific columns
 db.cursor.execute('''
-    SELECT p.id, p.key, g.name
-    FROM pauth_grouppermission p
-    JOIN auth_group g ON p.group_id = g.id
-    WHERE g.name = %s
+    SELECT u.id, u.name, a.role
+    FROM users u
+    JOIN account a ON u.account_id = a.id
+    WHERE a.role = %s
 ''', ('Admin',))
 result = db.cursor.fetchall()
 print(result)
